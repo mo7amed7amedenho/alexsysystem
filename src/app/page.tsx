@@ -1,31 +1,20 @@
-"use client";
-import { DataTable } from "@/components/sections/data-table";
-import { ColumnDef } from "@tanstack/react-table";
+// app/page.tsx
+import { auth } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
 
-type User = {
-  id: string;
-  name: string;
-  email: string;
-};
+export default async function HomePage() {
+  const tryAuth = await auth();
+  const { userId } = await tryAuth;
 
-const columns: ColumnDef<User>[] = [
-  { accessorKey: "name", header: "الاسم" },
-  { accessorKey: "email", header: "البريد الإلكتروني" },
-];
+  if (userId) {
+    redirect("/dashboard");
+  } else {
+    redirect("/sign-in");
+  }
 
-const users: User[] = [
-  { id: "1", name: "محمد", email: "mo@example.com" },
-  { id: "2", name: "أحمد", email: "ahmed@example.com" },
-];
-
-export default function Page() {
   return (
-    <DataTable
-      columns={columns}
-      data={users}
-      actionsRender={(row) => (
-        <button onClick={() => alert(`Edit user ${row.name}`)}>تعديل</button>
-      )}
-    />
+    <div className="flex items-center justify-center min-h-screen">
+      <h1 className="text-2xl font-bold"> Loading...</h1>
+    </div>
   );
 }

@@ -39,11 +39,6 @@ import {
   IconUserShield,
 } from "@tabler/icons-react";
 const data = {
-  user: {
-    name: "محمد حامد",
-    email: "hamedenho@alex.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
   navMain: [
     { title: "التحليلات الذكية", url: "/ai-analytics", icon: IconChartBar },
     // إدارة البذور
@@ -195,9 +190,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavMain items={data.navMain} />
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
-      <SidebarFooter>
-        <NavUser user={data.user} />
-      </SidebarFooter>
     </Sidebar>
   );
 }
