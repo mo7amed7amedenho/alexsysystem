@@ -91,7 +91,7 @@ export default function SignInPage() {
 
           <SignIn.Action
             submit
-            className="w-full rounded-md bg-green-700 px-3.5 py-1.5 text-sm font-medium text-white shadow hover:bg-green-600 transition"
+            className="w-full rounded-md hover:cursor-pointer bg-green-700 px-3.5 py-1.5 text-sm font-medium text-white shadow hover:bg-green-600 transition"
           >
             دخول
           </SignIn.Action>
