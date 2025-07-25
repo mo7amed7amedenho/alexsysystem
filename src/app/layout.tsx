@@ -10,6 +10,7 @@ import {
 import { Alexandria } from "next/font/google";
 import "./globals.css";
 import { shadesOfPurple } from "@clerk/themes";
+import { ThemeProvider } from "@/components/providers/theme-provider";
 
 const geistSans = Alexandria({
   variable: "--font-geist-sans",
@@ -37,9 +38,20 @@ export default function RootLayout({
           variables: { colorPrimary: "green" },
         },
       }}
+      signInUrl="/sign-in"
+      signUpUrl="/sign-up"
     >
       <html lang="en">
-        <body className={`${geistSans.variable} antialiased`}>{children}</body>
+        <body className={`${geistSans.variable} antialiased`}>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
+        </body>
       </html>
     </ClerkProvider>
   );

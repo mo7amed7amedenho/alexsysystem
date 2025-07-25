@@ -23,7 +23,17 @@ function AntdThemeWrapper({ children }: { children: React.ReactNode }) {
     theme === "dark" ? antdTheme.darkAlgorithm : antdTheme.defaultAlgorithm;
 
   return (
-    <ConfigProvider theme={{ algorithm: antdAlgorithm }}>
+    <ConfigProvider
+      direction="rtl"
+      theme={{
+        algorithm:
+          theme === "dark" ? antdAlgorithm : antdTheme.compactAlgorithm,
+        token: {
+          borderRadius: 4,
+          colorPrimary: "#007D35",
+        },
+      }}
+    >
       {children}
     </ConfigProvider>
   );

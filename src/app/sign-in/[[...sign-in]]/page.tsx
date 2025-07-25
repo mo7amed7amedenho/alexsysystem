@@ -4,6 +4,7 @@ import * as Clerk from "@clerk/elements/common";
 import * as SignIn from "@clerk/elements/sign-in";
 import Image from "next/image";
 import { Alexandria } from "next/font/google";
+import { Spin } from "antd";
 
 const alexandriaFont = Alexandria({
   variable: "--font-alexandria",
@@ -13,10 +14,9 @@ const alexandriaFont = Alexandria({
 export default function SignInPage() {
   return (
     <div
-      className={`relative flex min-h-screen w-full items-center justify-center overflow-hidden px-4 ${alexandriaFont.className}`}
+      className={`relative flex min-h-screen w-full items-center justify-center overflow-hidden px-4 ${alexandriaFont.className}  transition-colors duration-300`}
       dir="rtl"
     >
-      {/* خلفية متحركة SVG دوائر */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
         <svg
           className="absolute top-0 left-1/2 h-[150%] w-[150%] -translate-x-1/2 blur-[120px] opacity-40"
@@ -34,10 +34,11 @@ export default function SignInPage() {
       <SignIn.Root>
         <SignIn.Step
           name="start"
-          className="w-full space-y-4 rounded-2xl bg-white/90 px-2 py-10 shadow-xl backdrop-blur-lg ring-1 ring-black/10 sm:w-96 sm:px-8"
+          className="w-full sm:w-96 space-y-6 rounded-2xl px-6 py-10 shadow-xl border border-zinc-200 dark:border-zinc-800 backdrop-blur-md bg-zinc-100/85 dark:bg-zinc-900/85 transition"
         >
-          <header className="text-center">
-            <div className="flex justify-center items-center gap-2">
+          {/* رأس الصفحة */}
+          <header className="text-center border-b border-zinc-200 dark:border-zinc-800 pb-4 mb-4">
+            <div className="flex justify-center items-center gap-3">
               <Image
                 src="https://alexasfor.com/wp-content/uploads/2023/03/Alex.png"
                 alt="logo"
@@ -45,55 +46,69 @@ export default function SignInPage() {
                 height={100}
               />
               <div className="flex flex-col text-right">
-                <p className="text-sm font-bold text-green-700">
-                 أليكس للمستلزمات الزراعية
+                <p className="text-sm font-bold text-green-700 dark:text-green-400">
+                  أليكس للمستلزمات الزراعية
                 </p>
-                <p className="text-xs text-muted-foreground">
+                <p className="text-sm text-muted-foreground">
                   Alex for Agriculture Tools
                 </p>
                 <p className="text-xs text-muted-foreground">
-                    نظام إدارة الشركة
+                  نظام إدارة الشركة
                 </p>
               </div>
             </div>
-            <h1 className="mt-4 text-xl font-medium tracking-tight text-green-800">
+            <h1 className="mt-4 text-xl font-semibold text-zinc-900 dark:text-zinc-100">
               تسجيل الدخول
             </h1>
           </header>
 
-          <Clerk.GlobalError className="block text-sm text-red-400" />
+          {/* الأخطاء العامة */}
+          <Clerk.GlobalError className="block text-sm text-red-500" />
 
+          {/* الحقول */}
           <div className="space-y-4">
             <Clerk.Field name="identifier" className="space-y-2">
-              <Clerk.Label className="text-sm font-medium text-green-800">
+              <Clerk.Label className="text-sm font-medium text-zinc-700 dark:text-zinc-200">
                 البريد الإلكتروني
               </Clerk.Label>
               <Clerk.Input
                 type="text"
                 required
-                className="w-full rounded-md bg-white px-3.5 py-2 text-sm outline-none ring-1 ring-inset ring-zinc-300 hover:ring-zinc-400 focus:ring-2 focus:ring-green-700 data-[invalid]:ring-red-400"
+                className="w-full rounded-md bg-white dark:bg-zinc-800 px-3.5 py-2 text-sm outline-none ring-1 ring-inset ring-zinc-300 dark:ring-zinc-700 hover:ring-zinc-400 dark:hover:ring-zinc-500 focus:ring-2 focus:ring-green-600 dark:focus:ring-green-400 data-[invalid]:ring-red-500"
               />
-              <Clerk.FieldError className="block text-sm text-red-400" />
+              <Clerk.FieldError className="block text-sm text-red-500" />
             </Clerk.Field>
 
             <Clerk.Field name="password" className="space-y-2">
-              <Clerk.Label className="text-sm font-medium text-green-800">
+              <Clerk.Label className="text-sm font-medium text-zinc-700 dark:text-zinc-200">
                 كلمة المرور
               </Clerk.Label>
               <Clerk.Input
                 type="password"
                 required
-                className="w-full rounded-md bg-white px-3.5 py-2 text-sm outline-none ring-1 ring-inset ring-zinc-300 hover:ring-zinc-400 focus:ring-2 focus:ring-green-700 data-[invalid]:ring-red-400"
+                className="w-full rounded-md bg-white dark:bg-zinc-800 px-3.5 py-2 text-sm outline-none ring-1 ring-inset ring-zinc-300 dark:ring-zinc-700 hover:ring-zinc-400 dark:hover:ring-zinc-500 focus:ring-2 focus:ring-green-600 dark:focus:ring-green-400 data-[invalid]:ring-red-500"
               />
-              <Clerk.FieldError className="block text-sm text-red-400" />
+              <Clerk.FieldError className="block text-sm text-red-500" />
             </Clerk.Field>
           </div>
 
+          {/* زر الدخول */}
           <SignIn.Action
             submit
-            className="w-full rounded-md hover:cursor-pointer bg-green-700 px-3.5 py-1.5 text-sm font-medium text-white shadow hover:bg-green-600 transition"
+            className="w-full rounded-md bg-green-700 hover:bg-green-600 dark:bg-green-600 dark:hover:bg-green-500 px-3.5 py-2 text-sm font-medium text-white shadow transition disabled:opacity-50"
           >
-            دخول
+            <Clerk.Loading>
+              {(isLoading) =>
+                isLoading ? (
+                  <div className="flex items-center justify-center gap-2">
+                    <Spin size="small" />
+                    <span>جاري التحقق من البيانات ...</span>
+                  </div>
+                ) : (
+                  "تسجيل الدخول"
+                )
+              }
+            </Clerk.Loading>
           </SignIn.Action>
         </SignIn.Step>
       </SignIn.Root>

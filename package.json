@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@ant-design/nextjs-registry": "^1.0.2",
+    "@clerk/backend": "^2.5.2",
     "@clerk/elements": "^0.23.45",
     "@clerk/nextjs": "^6.26.0",
     "@clerk/themes": "^2.4.1",
