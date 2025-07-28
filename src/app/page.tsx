@@ -92,7 +92,7 @@ export default function HomePage() {
             height={120}
           />
           <div>
-            <h2 className="text-lg text-green-700">
+            <h2 className="text-lg text-green-700 dark:text-white">
               اليكس للمستلزمات الزراعية
             </h2>
             <p className="text-sm text-muted-foreground">
@@ -108,57 +108,66 @@ export default function HomePage() {
             className="mx-auto mb-4"
             size={100}
           />
-          <CardTitle className="text-2xl text-green-700 font-bold">
+          <CardTitle className="text-2xl text-green-700 dark:text-white font-bold">
             مرحباً بعودتك, {user.firstName}
           </CardTitle>
+          <p>{user.primaryEmailAddress?.emailAddress}</p>
         </CardHeader>
 
         <CardContent className="space-y-4">
-          <div>
-            <label className="text-sm font-medium text-muted-foreground">
-              برجاء إدخال كلمة المرور
-            </label>
-            <div className="relative mt-2">
-              <Input
-                type={showPassword ? "text" : "password"}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="text-right"
-                dir="rtl"
-                placeholder="كلمة المرور"
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute inset-y-0 left-0 px-3 text-muted-foreground hover:text-foreground focus:outline-none"
-              >
-                {showPassword ? (
-                  <EyeOff className="h-5 w-5" />
-                ) : (
-                  <Eye className="h-5 w-5" />
-                )}
-              </button>
-            </div>
-          </div>
-
-          <Button
-            className="w-full cursor-pointer !rounded-md bg-green-700 hover:bg-green-600 dark:bg-green-600 dark:hover:bg-green-500 px-3.5 py-2 text-sm font-medium text-white shadow transition disabled:opacity-50"
-            variant="default"
-            size="lg"
-            onClick={handleVerify}
-            disabled={password.length < 8 || loading}
+          <form
+            onSubmit={(e) => {
+              e.preventDefault(); // يمنع التحديث التلقائي
+              handleVerify();
+            }}
+            className="space-y-4"
           >
-            {loading ? (
-              <>
-                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                جاري التحقق من البيانات...
-              </>
-            ) : (
-              <div className="flex items-center justify-center text-white">
-                تأكيد الدخول
+            <div>
+              <label className="text-sm font-medium text-muted-foreground">
+                برجاء إدخال كلمة المرور
+              </label>
+              <div className="relative mt-2">
+                <Input
+                  type={showPassword ? "text" : "password"}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="text-right"
+                  dir="rtl"
+                  placeholder="كلمة المرور"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute inset-y-0 left-0 px-3 text-muted-foreground hover:text-foreground focus:outline-none"
+                >
+                  {showPassword ? (
+                    <EyeOff className="h-5 w-5" />
+                  ) : (
+                    <Eye className="h-5 w-5" />
+                  )}
+                </button>
               </div>
-            )}
-          </Button>
+            </div>
+
+            <Button
+              type="submit"
+              className="w-full cursor-pointer !rounded-md bg-green-700 hover:bg-green-600 dark:bg-green-600 dark:hover:bg-green-500 px-3.5 py-2 text-sm font-medium text-white shadow transition disabled:opacity-50"
+              variant="default"
+              size="lg"
+              disabled={password.length < 8 || loading}
+            >
+              {loading ? (
+                <>
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  جاري التحقق من البيانات...
+                </>
+              ) : (
+                <div className="flex items-center justify-center text-white">
+                  تأكيد الدخول
+                </div>
+              )}
+            </Button>
+          </form>
         </CardContent>
       </Card>
       {error && (
