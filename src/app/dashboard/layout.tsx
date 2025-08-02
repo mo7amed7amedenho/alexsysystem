@@ -8,6 +8,9 @@ import { SiteHeader } from "@/components/blocks/site-header";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
+import { Providers } from "@/components/providers/queryProvider";
+import { Toaster } from "@/components/ui/sonner";
+
 const geistSans = Alexandria({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -52,7 +55,14 @@ export default async function RootLayout({
               <SiteHeader />
               <div className="flex flex-1 flex-col">
                 <AntdRegistry>
-                  <div className="font-sans p-1">{children}</div>
+                  <div className="font-sans p-1">
+                    <Providers>{children}</Providers>
+                    <Toaster
+                      expand={false}
+                      richColors
+                      position="bottom-center"
+                    />
+                  </div>
                 </AntdRegistry>
               </div>
             </SidebarInset>
