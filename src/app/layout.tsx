@@ -1,17 +1,15 @@
 import { type Metadata } from "next";
-import {
-  ClerkProvider,
-  SignInButton,
-  SignUpButton,
-  SignedIn,
-  SignedOut,
-  UserButton,
-} from "@clerk/nextjs";
+import { ClerkProvider } from "@clerk/nextjs";
 import { Alexandria } from "next/font/google";
 import "./globals.css";
 import { shadesOfPurple } from "@clerk/themes";
 import { ThemeProvider } from "@/components/providers/theme-provider";
-
+import "@mantine/core/styles.css";
+import {
+  ColorSchemeScript,
+  MantineProvider,
+  mantineHtmlProps,
+} from "@mantine/core";
 const geistSans = Alexandria({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -41,7 +39,10 @@ export default function RootLayout({
       signInUrl="/sign-in"
       signUpUrl="/sign-up"
     >
-      <html lang="en">
+      <html lang="en" {...mantineHtmlProps}>
+        <head>
+          <ColorSchemeScript />
+        </head>
         <body className={`${geistSans.variable} antialiased`}>
           <ThemeProvider
             attribute="class"
@@ -49,7 +50,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            {children}
+            <MantineProvider>{children}</MantineProvider>
           </ThemeProvider>
         </body>
       </html>

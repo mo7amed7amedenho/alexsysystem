@@ -68,7 +68,7 @@ const data = {
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
-    <Sidebar {...props} side="right">
+    <Sidebar {...props} side="right" className="font-sans">
       <SidebarHeader>
         <SidebarMenu>
           <div className="flex items-center">
